@@ -15,11 +15,13 @@
     "https://www.googleapis.com/auth/logging.read",
     "https://www.googleapis.com/auth/cloud-platform",
     
-    "https://www.googleapis.com/auth/gmail.labels",
-    "https://www.googleapis.com/auth/gmail.metadata",
     "https://www.googleapis.com/auth/gmail.readonly",
     "https://www.googleapis.com/auth/gmail.modify",
-    "https://mail.google.com/"
+    "https://www.googleapis.com/auth/gmail.labels",
+    
+    "https://mail.google.com/",
+    "https://www.googleapis.com/auth/script.external_request"
+    
   ],
   "exceptionLogging": "STACKDRIVER"
 }

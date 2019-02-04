@@ -14,11 +14,25 @@ function getYearAndMonthStringFromDate(date){
   return stringYear + "-" + stringMonth;
 }
 
+function uploadAttachmentToDropbox(attachment, date, name){
+  var path = config.bropboxBasePath + date + "/"+ date + "-" + name + ".pdf";
+  uploadFileToDropbox(attachment, path);
+}
+
 function processesThread(thread){
+
   var messages = GmailApp.getMessagesForThread(thread);
   var message = messages[0];      //In my scenario normally I have only one message for thread for that kind of mail
-  var newLabel = "Casa Gorgonzola/"+getYearAndMonthStringFromDate(message.getDate());
+  var yearAndMonth = getYearAndMonthStringFromDate(message.getDate());
+  var newLabel = "Casa Gorgonzola/" + yearAndMonth;
   thread.addLabel(GmailApp.createLabel(newLabel)); 
+
+
+  var attachments = message.getAttachments();
+  attachments.forEach(function(fileBlob, index){
+    Logger.log('"%s" (%s bytes)', fileBlob.getName(), fileBlob.getSize());    
+    uploadAttachmentToDropbox(fileBlob, yearAndMonth, "pdf-"+index);    
+  });
 }
 
 function isThreadAlreadyProcessed(thread){
