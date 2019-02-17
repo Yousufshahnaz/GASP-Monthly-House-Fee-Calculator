@@ -60,7 +60,7 @@ function processesThread(thread) {
   var messages = GmailApp.getMessagesForThread(thread);
   var message = messages[0];      //In my scenario normally I have only one message for thread for that kind of mail
   var yearAndMonth = getYearAndMonthStringFromDate(message.getDate());
-  var newLabel = "Casa Gorgonzola/" + yearAndMonth;
+  var newLabel = config.homeLabel + "/" + yearAndMonth;
   thread.addLabel(GmailApp.createLabel(newLabel));
 
   var result = {
@@ -83,11 +83,11 @@ function processesThread(thread) {
 }
 
 function isThreadAlreadyProcessed(thread) {
-  return thread.getLabels().some(function (label) { return label.getName() == "Processed by Google Script" });
+  return thread.getLabels().some(function (label) { return label.getName() == config.alreadyPrecessedLabel });
 }
 
 function main() {
-  var label = GmailApp.getUserLabelByName("Need to be processed");
+  var label = GmailApp.getUserLabelByName(config.needToBeProcessedLabel);
   var threads = label.getThreads();
   for (var i = threads.length - 1; i >= 0; i--) { //Process them in the order received
     var thread = threads[i];
@@ -97,7 +97,7 @@ function main() {
       uploadInfoToGoogleSheets(result);
       Logger.log("result %s", JSON.stringify(result));
 
-      thread.addLabel(GmailApp.getUserLabelByName("Processed by Google Script"));
+      thread.addLabel(GmailApp.getUserLabelByName(config.alreadyPrecessedLabel));
     }
   }
 }

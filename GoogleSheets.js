@@ -24,7 +24,7 @@ function fillSheetWithInfo(year, month, invoce){
   Logger.log(file.getName());
   var row = getRowToEdit(year, month);  
   
-  var sheet = file.getSheetByName("Foglio1");
+  var sheet = file.getSheetByName(config.sheetName);
   sheet.getRange("B"+row).setValue(year);
   sheet.getRange("C"+row).setValue(month);
   sheet.getRange("D"+row).setFormula(Utilities.formatString('=TEXT(DATE(B%s;C%s;1);"MMMM")',row,row));
